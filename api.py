@@ -28,3 +28,7 @@ def calc_interests_rate():
 
 	return 'Initial: ' + initial_value + '; Time: '+ time + '; interests-rate: ' + str(interests_rate)
 
+@app.route('/api/show-me-your-code', methods=['GET'])
+def show_github_link():
+	return '<a href="https://github.com/fabricioizumi/flaskapi">https://github.com/fabricioizumi/flaskapi</a>'
+
