@@ -1,5 +1,6 @@
 from flask import Flask, request
-import asyncio 
+import asyncio
+import math 
 
 app=Flask(__name__)
 
@@ -21,12 +22,21 @@ def calc_interests_rate():
 	loop=asyncio.get_event_loop()
 	result=loop.run_until_complete(async_get_interests_rate())
 	
-	interests_rate=float(result)
+	try:
+		
+		interests_rate=float(result)
+	
+		initial_value=float(request.form.get('initial_value'))
+		time=float(request.form.get('time'))
+		
+		calc=initial_value*(math.pow(1+interests_rate,time))
+		final_value= "{:.2f}".format(calc)
 
-	initial_value=request.form.get('initial_value')
-	time=request.form.get('time')
-
-	return 'Initial: ' + initial_value + '; Time: '+ time + '; interests-rate: ' + str(interests_rate)
+		return final_value
+	except Exception as ex:
+		return str(ex)
+	
+	#return 'Initial: ' + initial_value + '; Time: '+ time + '; interests-rate: ' + str(interests_rate)
 
 @app.route('/api/show-me-your-code', methods=['GET'])
 def show_github_link():
